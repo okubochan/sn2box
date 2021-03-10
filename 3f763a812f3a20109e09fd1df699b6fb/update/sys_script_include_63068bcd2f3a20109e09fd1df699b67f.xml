@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_540323_sn2box.TESTutil</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>TESTutil</name>
+        <script><![CDATA[var TESTutil = Class.create();
+TESTutil.prototype = {
+    initialize: function() {
+    },
+
+	deleteBoxFile: function(parentFolderId) {
+
+		var r = new sn_ws.RESTMessageV2('x_540323_sn2box.BOX_GET_FOLDER_ITEMS', 'run');
+		r.setStringParameterNoEscape('FOLDER_ID', parentFolderId);
+
+		var response = r.execute();
+		var responseBody = response.getBody();
+		var jsonform = JSON.parse(responseBody);
+		var entries = jsonform.entries;
+		for ( var i=0; i<entries.length; i++ ){
+			if( entries[i].type !== 'file' ) {
+				continue;
+			}
+			var r2 = new sn_ws.RESTMessageV2('x_540323_sn2box.BOX_FILE_DELETE', 'run');
+			r2.setStringParameterNoEscape('FILE_ID', entries[i].id);
+			var response2 = r2.execute();
+			var responseBody2 = response2.getBody();
+			var jsonform2 = JSON.parse(responseBody2);
+			if (response2.getStatusCode() != 204) {
+				gs.info('===' + response2.getStatusCode() + ':' + response2.getErrorMessage());
+			}
+
+		}
+	},
+	
+	contactReception: function(parentFolderId,buckupFolderId) {
+
+		var r = new sn_ws.RESTMessageV2('x_540323_sn2box.BOX_GET_FOLDER_ITEMS', 'run');
+		r.setStringParameterNoEscape('FOLDER_ID', parentFolderId);
+
+		var response = r.execute();
+		var responseBody = response.getBody();
+		var jsonform = JSON.parse(responseBody);
+		var entries = jsonform.entries;
+		for ( var i=0; i<entries.length; i++ ){
+			if( entries[i].type !== 'file' ) {
+				continue;
+			}
+			var r2 = new sn_ws.RESTMessageV2('x_540323_sn2box.BOX_FILE_DOWNLOAD', 'run');
+			r2.setStringParameterNoEscape('FILE_ID', entries[i].id);
+			var response2 = r2.execute();
+
+			
+			// ダウンロードしたあとに、テーブルに書き込む
+			var responseBody2 = response2.getBody();
+			var tmpResponseBody2 = responseBody2.split("\r");
+			var result = [];
+			for ( var j=0; j<tmpResponseBody2.length; j++) {
+				result[j] = new sn_impex.CSVParser().parseLineToArray(tmpResponseBody2[j],',','"');
+			}
+			if ( result.length>2) {
+				var grImportData = new GlideRecord('x_540323_sn2box_importdata');
+				for ( var k=1; k<result.length; k++ ) {
+					grImportData.initialize();
+					grImportData.setValue('requested_for',result[k][0]);
+					grImportData.setValue('request_type',result[k][1]);
+					grImportData.setValue('what_needed',result[k][2]);
+					grImportData.setValue('short_description',result[k][3]);
+					grImportData.setValue('must_have_by',result[k][4]);
+					grImportData.insert();
+				}
+			}
+			
+			var r5 = new sn_ws.RESTMessageV2('x_540323_sn2box.BOX_FILE_UPDATE', 'run');
+			r5.setStringParameterNoEscape('FILE_ID', entries[i].id);
+			var body = {
+				"parent": {
+					"id": buckupFolderId
+				}
+			};
+			r5.setRequestBody(JSON.stringify(body));
+			var response5 = r5.execute();
+			var responseBody5 = response5.getBody();
+			var jsonform5 = JSON.parse(responseBody5);
+// 			gs.info(response5.getStatusCode());
+			
+		}
+	},
+
+	uploadFileToBox: function(parentFolderId) {
+		
+		var grImportData = new GlideRecord('x_540323_sn2box_importdata');
+		grImportData.addQuery("uploaddate","non");
+		grImportData.query();
+		
+        while (grImportData.next()) {
+			grFromAtt = new GlideRecord('sys_attachment');
+			grFromAtt.addQuery('table_name', 'x_540323_sn2box_importdata');
+			grFromAtt.addQuery('table_sys_id', grImportData.sys_id);
+			grFromAtt.query();
+			while(grFromAtt.next()) {
+				
+				var r5 = new sn_ws.RESTMessageV2();
+				r5.setEndpoint('https://dev105779.service-now.com/api/x_540323_sn2box/multipart/attachment');
+				r5.setHttpMethod('GET');
+
+				var user = 'admin';
+				var password = 'Puhn053n!!';
+
+				r5.setBasicAuth(user,password);
+				r5.setRequestHeader("Accept","application/json");
+				r5.saveResponseBodyAsAttachment('x_540323_sn2box_importdata',grImportData.sys_id,'tmp');
+				r5.setLogLevel('all');
+				var response5 = r5.execute();
+				gs.info(response5.getResponseAttachmentSysid());
+				
+				var sys_id = 'c67142b62f6a60109e09fd1df699b63f';
+				var r6 = new sn_ws.RESTMessageV2('x_540323_sn2box.BOX_FILE_UPLOAD', 'run');
+				r6.setRequestHeader("Accept", "application/json, text/plain, */*");
+// 				r6.setRequestHeader("file", "test.txt");
+// 				r6.setRequestHeader("Multipart", "true");
+// 				r6.setRequestHeader("Authorization", "Bearer QQ9anmT25bhJ9Jiy9yph6UbQCMowv9JR");
+				r6.setRequestHeader("Content-Type", "multipart/form-data; boundary=----WebKitFormBoundarygifvUdlfNTD2z5YG");
+				r6.setRequestBodyFromAttachment(response5.getResponseAttachmentSysid());
+// 				r6.setRequestBodyFromAttachment(sys_id);
+
+				var response6 = r6.execute();
+				if (response6.getStatusCode() !== 201 ) {
+					gs.info(response6.getBody());
+					gs.info(response6.getErrorMessage());
+					
+				}
+
+				var attachment = new GlideSysAttachment();
+				attachment.deleteAttachment(response5.getResponseAttachmentSysid());
+				
+			}
+		}
+		
+	},
+	type: 'TESTutil'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-03-08 13:17:48</sys_created_on>
+        <sys_id>63068bcd2f3a20109e09fd1df699b67f</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>TESTutil</sys_name>
+        <sys_package display_value="sn2box" source="x_540323_sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_scope>
+        <sys_update_name>sys_script_include_63068bcd2f3a20109e09fd1df699b67f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-03-08 13:18:22</sys_updated_on>
+    </sys_script_include>
+</record_update>

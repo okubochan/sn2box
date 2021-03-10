@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module">
+    <sys_app_module action="DELETE">
+        <active>true</active>
+        <application display_value="sn2box">0947f6052f3a20109e09fd1df699b65d</application>
+        <assessment/>
+        <device_type/>
+        <filter/>
+        <hint/>
+        <homepage/>
+        <image/>
+        <link_type>LIST</link_type>
+        <map_page/>
+        <mobile_title>importdatas</mobile_title>
+        <mobile_view_name>Mobile</mobile_view_name>
+        <name>x_540323_sn2box_importdata</name>
+        <order/>
+        <override_menu_roles>false</override_menu_roles>
+        <query/>
+        <report/>
+        <roles>x_540323_sn2box.importdata_user</roles>
+        <sys_class_name>sys_app_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-03-08 12:08:04</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>1947f6052f3a20109e09fd1df699b660</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>importdatas</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="sn2box" source="x_540323_sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_scope>
+        <sys_update_name>sys_app_module_1947f6052f3a20109e09fd1df699b660</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-03-08 12:08:04</sys_updated_on>
+        <timeline_page/>
+        <title>importdatas</title>
+        <uncancelable>false</uncancelable>
+        <view_name/>
+        <window_name/>
+    </sys_app_module>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="sn2box">3f763a812f3a20109e09fd1df699b6fb</application>
+        <file_path/>
+        <instance_id>4ea4434fdb7de850b847ac44d4961935</instance_id>
+        <instance_name>dev105779</instance_name>
+        <name>sys_app_module_1947f6052f3a20109e09fd1df699b660</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module"><sys_app_module action="INSERT_OR_UPDATE"><active>true</active><application display_value="sn2box">0947f6052f3a20109e09fd1df699b65d</application><assessment/><device_type/><filter/><hint/><homepage/><image/><link_type>LIST</link_type><map_page/><mobile_title>importdatas</mobile_title><mobile_view_name>Mobile</mobile_view_name><name>x_540323_sn2box_importdata</name><order/><override_menu_roles>false</override_menu_roles><query/><report/><roles>x_540323_sn2box.importdata_user</roles><sys_class_name>sys_app_module</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2021-03-08 12:08:04</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>1947f6052f3a20109e09fd1df699b660</sys_id><sys_mod_count>0</sys_mod_count><sys_name>importdatas</sys_name><sys_overrides/><sys_package display_value="sn2box" source="x_540323_sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_package><sys_policy/><sys_scope display_value="sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_scope><sys_update_name>sys_app_module_1947f6052f3a20109e09fd1df699b660</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2021-03-08 12:08:04</sys_updated_on><timeline_page/><title>importdatas</title><uncancelable>false</uncancelable><view_name/><window_name/></sys_app_module></record_update>]]></payload>
+        <payload_hash>820961792</payload_hash>
+        <record_name>importdatas</record_name>
+        <reverted_from/>
+        <source>f3763a812f3a20109e09fd1df699b6fe</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-03-08 12:08:05</sys_created_on>
+        <sys_id>d147f6052f3a20109e09fd1df699b663</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>17811bcbc8e0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-03-08 12:08:05</sys_updated_on>
+        <type>Module</type>
+        <update_guid>1d47f605643a201013b8b5bf4d6bff62</update_guid>
+        <update_guid_history>1d47f605643a201013b8b5bf4d6bff62:820961792</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="importdatas">7a5836452f3a20109e09fd1df699b6f7</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-03-08 12:12:49</sys_created_on>
+        <sys_db_object display_value="" name="sys_app_module">sys_app_module</sys_db_object>
+        <sys_id>4e277745476f41db9e2eace22b0d4e21</sys_id>
+        <sys_metadata>1947f6052f3a20109e09fd1df699b660</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>importdatas</sys_name>
+        <sys_package display_value="sn2box" source="x_540323_sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_scope>
+        <sys_scope_delete display_value="">012dfa130fca4386822227ea5874fcc4</sys_scope_delete>
+        <sys_update_name>sys_app_module_1947f6052f3a20109e09fd1df699b660</sys_update_name>
+        <sys_update_version display_value="sys_app_module_1947f6052f3a20109e09fd1df699b660">d147f6052f3a20109e09fd1df699b663</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-03-08 12:12:49</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

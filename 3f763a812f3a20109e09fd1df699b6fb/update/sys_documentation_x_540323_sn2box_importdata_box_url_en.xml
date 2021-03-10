@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="box_url" label="BOX_URL" language="en" table="x_540323_sn2box_importdata">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>box_url</element>
+            <help/>
+            <hint/>
+            <label>BOX_URL</label>
+            <language>en</language>
+            <name>x_540323_sn2box_importdata</name>
+            <plural>BOX_URLs</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-03-08 12:16:08</sys_created_on>
+            <sys_id>971972852f3a20109e09fd1df699b670</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>BOX_URL</sys_name>
+            <sys_package display_value="sn2box" source="x_540323_sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_scope>
+            <sys_update_name>sys_documentation_x_540323_sn2box_importdata_box_url_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-03-08 12:16:08</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

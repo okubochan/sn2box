@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl">
+    <sys_security_acl action="DELETE">
+        <active>true</active>
+        <admin_overrides>true</admin_overrides>
+        <advanced>false</advanced>
+        <condition/>
+        <description>Default access control on x_540323_sn2box_importdata</description>
+        <name>x_540323_sn2box_importdata</name>
+        <operation display_value="read">read</operation>
+        <script/>
+        <sys_class_name>sys_security_acl</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-03-08 12:08:05</sys_created_on>
+        <sys_id>5147f6052f3a20109e09fd1df699b670</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_540323_sn2box_importdata</sys_name>
+        <sys_package display_value="sn2box" source="x_540323_sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_scope>
+        <sys_update_name>sys_security_acl_5147f6052f3a20109e09fd1df699b670</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-03-08 12:08:05</sys_updated_on>
+        <type display_value="record">record</type>
+    </sys_security_acl>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="sn2box">3f763a812f3a20109e09fd1df699b6fb</application>
+        <file_path/>
+        <instance_id>4ea4434fdb7de850b847ac44d4961935</instance_id>
+        <instance_name>dev105779</instance_name>
+        <name>sys_security_acl_5147f6052f3a20109e09fd1df699b670</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl"><sys_security_acl action="INSERT_OR_UPDATE"><active>true</active><admin_overrides>true</admin_overrides><advanced>false</advanced><condition/><description>Default access control on x_540323_sn2box_importdata</description><name>x_540323_sn2box_importdata</name><operation display_value="read">read</operation><script/><sys_class_name>sys_security_acl</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2021-03-08 12:08:05</sys_created_on><sys_id>5147f6052f3a20109e09fd1df699b670</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_540323_sn2box_importdata</sys_name><sys_package display_value="sn2box" source="x_540323_sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_package><sys_policy/><sys_scope display_value="sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_scope><sys_update_name>sys_security_acl_5147f6052f3a20109e09fd1df699b670</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2021-03-08 12:08:05</sys_updated_on><type display_value="record">record</type></sys_security_acl></record_update>]]></payload>
+        <payload_hash>-839618473</payload_hash>
+        <record_name>x_540323_sn2box_importdata</record_name>
+        <reverted_from/>
+        <source>f3763a812f3a20109e09fd1df699b6fe</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-03-08 12:08:05</sys_created_on>
+        <sys_id>5947f6052f3a20109e09fd1df699b672</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>17811bcbe4e0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-03-08 12:08:05</sys_updated_on>
+        <type>Access Control</type>
+        <update_guid>9147f6050b3a2010144477306701cd72</update_guid>
+        <update_guid_history>9147f6050b3a2010144477306701cd72:-839618473</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-03-08 12:12:49</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl">sys_security_acl</sys_db_object>
+        <sys_id>2967e47f06c84b589c327ba2f92bfb69</sys_id>
+        <sys_metadata>5147f6052f3a20109e09fd1df699b670</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_540323_sn2box_importdata</sys_name>
+        <sys_package display_value="sn2box" source="x_540323_sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_package>
+        <sys_parent display_value="">1147f6052f3a20109e09fd1df699b682</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_scope>
+        <sys_scope_delete display_value="">012dfa130fca4386822227ea5874fcc4</sys_scope_delete>
+        <sys_update_name>sys_security_acl_5147f6052f3a20109e09fd1df699b670</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_5147f6052f3a20109e09fd1df699b670">5947f6052f3a20109e09fd1df699b672</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-03-08 12:12:49</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

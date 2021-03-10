@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_540323_sn2box.sn2box_SI</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>sn2box_SI</name>
+        <script><![CDATA[var sn2box_SI = Class.create();
+sn2box_SI.prototype = {
+    initialize: function() {
+		this.folderName = this._getFolderName();
+		this.boundaryId = this._getBoundaryId();
+		this.password = this._getPassword();
+    },
+
+	uploadFile: function(table_sys_id,att_sys_id,att_file_name,att_type) {
+		
+		//BOXフォルダ作成
+		var r1 = new sn_ws.RESTMessageV2('x_540323_sn2box.BOX_CREATE_FOLDER', 'run');
+		var body = {
+			"name": this.folderName,
+			"parent": {"id": "133052915893"}
+		};
+		r1.setRequestBody(JSON.stringify(body));
+		var response1 = r1.execute();
+		var responseBody1 = JSON.parse(response1.getBody());
+		var folder_id = responseBody1.id;
+
+		//script RESR APIを使ってmultipartform生成。応答内容を、元レコードにtmpとして添付する。
+		var r2 = new sn_ws.RESTMessageV2();
+		r2.setEndpoint('https://dev105779.service-now.com/api/x_540323_sn2box/multipart/attachment');
+		r2.setHttpMethod('GET');
+
+// 		var user = 'admin';
+// 		var password = 'Puhn053n!!';
+// 		r2.setBasicAuth(user,password);
+
+		r2.setRequestHeader("Accept","application/json");
+		
+		r2.setQueryParameter('uploadFolder_id',folder_id);
+		r2.setQueryParameter('attachment_sysid',att_sys_id);
+		r2.setQueryParameter('attachment_name',att_file_name);
+		r2.setQueryParameter('attachment_type',att_type);
+		r2.setQueryParameter('boundary_id',this.boundaryId);
+		r2.saveResponseBodyAsAttachment('x_540323_sn2box_importdata',table_sys_id,'tmp');
+		r2.setLogLevel('all');
+		var response2 = r2.execute();
+		
+		//アップロード multipartフォーム部分は、tmpを添付ファイルに設定する。
+		var r3 = new sn_ws.RESTMessageV2('x_540323_sn2box.BOX_FILE_UPLOAD', 'run');
+		r3.setRequestHeader("Accept", "application/json, text/plain, */*");
+		r3.setRequestHeader("Content-Type", "multipart/form-data; boundary=--" + this.boundaryId );
+		r3.setRequestBodyFromAttachment(response2.getResponseAttachmentSysid());
+		var response3 = r3.execute();
+		
+		//resposeから、アップロードしたファイルのidを取得する
+		var responseBody3 = JSON.parse(response3.getBody());
+		for (var i=0;i<responseBody3.entries.length; i++ ){
+			if (responseBody3.entries[i].type !== 'file') {
+				continue;
+			}
+			var upload_file_id = responseBody3.entries[i].id;
+			break;
+		}
+
+		//添付ファイル削除
+
+		var attachment = new GlideSysAttachment();
+		attachment.deleteAttachment(response2.getResponseAttachmentSysid());
+		attachment.deleteAttachment(att_sys_id);
+		
+		//ファイルリンク作成(共有期限は2日)
+		var gdt = new GlideDateTime();
+		gdt.addDaysLocalTime(2);
+		var unshared_at = gdt.getValue();
+
+		var r4 = new sn_ws.RESTMessageV2('x_540323_sn2box.BOX_FILE_LINK', 'run');
+		r4.setStringParameterNoEscape('FILE_ID', upload_file_id);
+		r4.setQueryParameter('fields', 'shared_link');
+		var body2 = {
+			"shared_link": {
+				"access": "open",
+				"password": this.password,
+				"unshared_at": unshared_at,
+				"permissions": {
+					"can_download": true
+				}
+			}
+		};
+		r4.setRequestBody(JSON.stringify(body2));
+		var response4 = r4.execute();
+		var responseBody4 = JSON.parse(response4.getBody());	
+		
+		//共有リンクとパスワードを元レコードに格納し、メールにて通知
+		var grImpData = new GlideRecord('x_540323_sn2box_importdata');
+		grImpData.addQuery('sys_id', table_sys_id);
+		grImpData.query();
+		while (grImpData.next()) {
+			grImpData.box_url = responseBody4.shared_link.url;
+			grImpData.password = this.password;
+			grImpData.update();			
+			gs.eventQueue('x_540323_sn2box.NotifyBOXURL',grImpData,'','');
+		}
+
+
+	},
+
+	_getBoundaryId: function() {
+		var text = "";
+		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		for (var i = 0; i < 8; i++)
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+		return text;
+	},
+
+	_getPassword: function() {
+		var text = "";
+		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		for (var i = 0; i < 16; i++)
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+		return text;
+	},
+
+	_getFolderName: function() {
+		gdt = new Date();
+		var Year = gdt.getFullYear();
+		var Month = gdt.getMonth() + 1;
+		var Day = gdt.getDay();
+		var Hour = gdt.getHours();
+		var Minute = gdt.getMinutes();
+		var Second = gdt.getSeconds();
+		return 'TMP' + Year + ('0' + Month).slice(-2) + ('0' + Day).slice(-2) + ('0' + Hour).slice(-2) + ('0' + Minute).slice(-2) + ('0' + Second).slice(-2);
+	},
+
+    type: 'sn2box_SI'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-03-08 14:05:16</sys_created_on>
+        <sys_id>afbd83c52f7a20109e09fd1df699b61f</sys_id>
+        <sys_mod_count>40</sys_mod_count>
+        <sys_name>sn2box_SI</sys_name>
+        <sys_package display_value="sn2box" source="x_540323_sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="sn2box">3f763a812f3a20109e09fd1df699b6fb</sys_scope>
+        <sys_update_name>sys_script_include_afbd83c52f7a20109e09fd1df699b61f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-03-09 04:29:58</sys_updated_on>
+    </sys_script_include>
+</record_update>

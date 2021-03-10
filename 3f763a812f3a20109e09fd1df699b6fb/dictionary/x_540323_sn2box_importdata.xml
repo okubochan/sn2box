@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="importdata" max_length="40" name="x_540323_sn2box_importdata" sizeclass="5" type="collection">
+        <element label="BOX_URL" max_length="1024" name="box_url" type="url"/>
+        <element label="E-mail" max_length="40" name="e_mail" type="string"/>
+        <element label="Must have by" max_length="40" name="must_have_by" type="string"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Password" max_length="40" name="password" type="string"/>
+        <element label="Requested for" max_length="40" name="requested_for" type="string"/>
+        <element label="Request type" max_length="40" name="request_type" type="string"/>
+        <element label="Short description" max_length="40" name="short_description" type="string"/>
+        <element label="What needed" max_length="40" name="what_needed" type="string"/>
+    </element>
+</database>
